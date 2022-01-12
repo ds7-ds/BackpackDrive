@@ -32,6 +32,9 @@ then
 	if [[ "$BACKUP_MOD_DATE" < "$LOCAL_MOD_DATE" ]]
 	then
 		echo "Backup is old"
+		rm -rf Darshan
+		cd ~/Documents
+		cp -r -v Darshan /media/"$USER"/"$DRIVE_MOUNTED"/Darshan
 	else
 		echo "Backup is current"
 	fi
