@@ -36,7 +36,7 @@ then
 		cd ~/Documents
 		cp -r -v Darshan /media/"$USER"/"$DRIVE_MOUNTED"/Darshan
 	else
-		echo "Backup is current"
+		read -t 5 -p "Backup is current"
 	fi
 else
 	echo "Cannot backup to USB"
