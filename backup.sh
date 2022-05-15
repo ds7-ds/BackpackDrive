@@ -6,6 +6,14 @@
 #                                                                                   #
 #####################################################################################
 
+# Credit to these posts for helping me out:
+# https://unix.stackexchange.com/questions/408978/fastest-way-to-determine-if-directory-contents-have-changed-since-last-time
+# https://stackoverflow.com/questions/4997242/in-linux-terminal-how-do-i-show-the-folders-last-modification-date-taking-its
+# https://stackoverflow.com/questions/2355148/run-a-string-as-a-command-within-a-bash-script
+# https://unix.stackexchange.com/questions/377891/copy-whole-folder-from-source-to-destination-and-remove-extra-files-or-folder-fr
+# https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file
+# https://stackoverflow.com/questions/14922562/how-do-i-copy-folder-with-files-to-another-folder-in-unix-linux
+
 # Get local user to access folders
 USER=$(whoami)
 
