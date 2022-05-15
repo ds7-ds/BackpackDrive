@@ -1,22 +1,26 @@
 #!/bin/bash
 
+#####################################################################################
+#                                                                                   #
+# Auto backup "Darshan" folder in Documents to USB Flash backup drives if connected #
+#                                                                                   #
+#####################################################################################
 
-# Auto backup "Darshan" folder in Documents to USB Flash backup drives if connected
-
-
-# Wait for OS to load entirely before starting
-#sleep 1s
 # Get local user to access folders
 USER=$(whoami)
-echo $USER
-cd /media/$USER
-# Get USB drive name and check if it's the backup drive
-DRIVE_MOUNTED=$(ls)
-echo $DRIVE_MOUNTED
-DRIVE_A="BACKUP A"
-if [ "$DRIVE_MOUNTED"=="$DRIVE_A" ]
+
+# Check if backup drive is connected
+FOLDER_FROM="darshan"
+FOLDER_TO="darshan"
+DRIVE_BACKUP="BACKUP A"
+cd /media/"$USER"/"$DRIVE_BACKUP"/"$FOLDER_TO" &> /dev/null
+DRIVE_MOUNTED=$?
+
+# If connected, backup files otherwise display an error message and quit
+if [ $DRIVE_MOUNTED == 0 ]
 then
 	echo "Backing up files to USB"
+	exit
 	# Go to Documents and obtain local folder modification date
 	cd ~/Documents
 	ls
