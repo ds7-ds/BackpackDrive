@@ -35,7 +35,7 @@ then
 		echo "Updating backup with newer local folder..."
 		echo ""
 		cd ~/Documents
-		rsync --verbose --recursive --update --delete-after $FOLDER_FROM/ /media/$USER/$DRIVE_BACKUP/$FOLDER_TO
+		rsync --verbose --recursive --update --delete-after $FOLDER_FROM/ /media/$USER/"$DRIVE_BACKUP"/$FOLDER_TO
 	else
 		echo "Backup is current. No update needed..."
 	fi
