@@ -13,6 +13,8 @@
 # https://unix.stackexchange.com/questions/377891/copy-whole-folder-from-source-to-destination-and-remove-extra-files-or-folder-fr
 # https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file
 # https://stackoverflow.com/questions/14922562/how-do-i-copy-folder-with-files-to-another-folder-in-unix-linux
+# https://stackoverflow.com/questions/4561895/how-to-recursively-find-the-latest-modified-file-in-a-directory
+# https://linuxize.com/post/linux-cut-command/
 
 # Get local user to access folders
 USER=$(whoami)
@@ -30,14 +32,14 @@ then
 	echo "Backing up files to: "$DRIVE_BACKUP"..."
 	# Go to Documents and obtain local folder modification date
 	cd ~/Documents
-	TEMP_DATE_1=$(stat $FOLDER_FROM | grep "Modify" | cut -c 9-27)
-	LOCAL_MOD_DATE=$(date -d "$TEMP_DATE_1" +%s)
-	echo "Last modification to local folder "$FOLDER_FROM": "$TEMP_DATE_1
+	LOCAL_MOD_TIME=$(find $FOLDER_FROM/ -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f1 -d".")
+	LOCAL_MOD_DATE=$(date -d @$LOCAL_MOD_TIME)
+	echo "Last modification to local folder "$FOLDER_FROM": "$LOCAL_MOD_DATE
 	# Go to backup drive, get mod date, and compare dates
 	cd /media/"$USER"/"$DRIVE_BACKUP"
-	TEMP_DATE_2=$(stat $FOLDER_TO | grep "Modify" | cut -c 9-27)
-	BACKUP_MOD_DATE=$(date -d "$TEMP_DATE_2" +%s)
-	echo "Last modification to backup folder "$FOLDER_TO": "$TEMP_DATE_2
+	BACKUP_MOD_TIME=$(find $FOLDER_TO/ -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f1 -d".")
+	BACKUP_MOD_DATE=$(date -d @$BACKUP_MOD_TIME)
+	echo "Last modification to backup folder "$FOLDER_TO": "$BACKUP_MOD_DATE
 	if [[ $BACKUP_MOD_DATE < $LOCAL_MOD_DATE ]]
 	then
 		echo "Updating backup with newer local folder..."
