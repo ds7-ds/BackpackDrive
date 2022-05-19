@@ -17,6 +17,8 @@
 # https://linuxize.com/post/linux-cut-command/
 # https://unix.stackexchange.com/questions/226310/using-file-date-time-as-metadata-reliable
 # https://www.cyberciti.biz/tips/linux-unix-pause-command.html
+# https://www.linuxtechi.com/compare-numbers-strings-files-in-bash-script/
+# https://stackoverflow.com/questions/4277665/how-do-i-compare-two-string-variables-in-an-if-statement-in-bash
 
 # Get local user to access folders
 USER=$(whoami)
@@ -29,7 +31,7 @@ cd /media/"$USER"/"$DRIVE_BACKUP"/"$FOLDER_TO" &> /dev/null
 DRIVE_MOUNTED_STATUS=$?
 
 # If connected, backup files otherwise display an error message and quit
-if [[ $DRIVE_MOUNTED_STATUS == 0 ]]
+if [ $DRIVE_MOUNTED_STATUS -eq 0 ]
 then
 	echo "Backing up files to: "$DRIVE_BACKUP"..."
 	# Go to Documents and obtain local folder modification date
@@ -42,7 +44,7 @@ then
 	BACKUP_MOD_TIME=$(find $FOLDER_TO/ -type d -printf '%T@ %p\n' | sort -n | tail -1 | cut -f1 -d".")
 	BACKUP_MOD_DATE=$(date -d @$BACKUP_MOD_TIME)
 	echo "Last modification to backup folder "$FOLDER_TO": "$BACKUP_MOD_DATE
-	if [[ $BACKUP_MOD_DATE < $LOCAL_MOD_DATE ]]
+	if [ $BACKUP_MOD_TIME -lt $LOCAL_MOD_TIME ]
 	then
 		echo "Updating backup with newer local folder..."
 		echo ""
