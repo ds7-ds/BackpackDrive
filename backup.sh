@@ -16,6 +16,7 @@
 # https://stackoverflow.com/questions/4561895/how-to-recursively-find-the-latest-modified-file-in-a-directory
 # https://linuxize.com/post/linux-cut-command/
 # https://unix.stackexchange.com/questions/226310/using-file-date-time-as-metadata-reliable
+# https://www.cyberciti.biz/tips/linux-unix-pause-command.html
 
 # Get local user to access folders
 USER=$(whoami)
@@ -49,6 +50,18 @@ then
 		rsync --verbose --recursive --update --delete-after $FOLDER_FROM/ /media/$USER/"$DRIVE_BACKUP"/$FOLDER_TO
 	else
 		echo "Backup is current. No update needed..."
+		echo ""
+		read -t 5 -p "Download backup and replace local copy? [y/n]: " response
+		if [[ $response == "y" ]]
+		then
+			echo "Replacing local copy with backup..."
+			rsync --verbose --recursive --update --delete-after /media/$USER/"$DRIVE_BACKUP"/$FOLDER_TO $FOLDER_FROM/
+		elif [[ $response == "n" ]]
+		then
+			echo "No action performed..."
+		else
+			echo ""
+		fi
 	fi
 else
 	echo "Cannot backup to"$DRIVE_BACKUP". No USB drive detected..."
